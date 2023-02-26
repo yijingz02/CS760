@@ -46,7 +46,7 @@ class logistic_regression():
             else:
                 tmp = self.y[i] * np.log(f[i]) + (1 - self.y[i]) * np.log(1 - f[i])
             loss += tmp
-        return -loss / f.shape
+        return -loss / f.shape[0]
 
     def sigmoid(self, x):
         return 1.0/(1 + np.exp(-(x.astype(float)) ))
@@ -59,7 +59,7 @@ class logistic_regression():
 
     def train(self, times):
         for i in range(times):
-            gl, loss = self.calc_gradient()
+            gl, l = self.calc_gradient()
             self.theta = np.subtract(self.theta, self.lr * gl)
             # _, predicted_y = self.predict(self.x)
             # print("theta:", self.theta)
@@ -95,8 +95,8 @@ def Q2_3():
         precision = precision_score(test_y, predicted_y)
         recall    = recall_score(test_y, predicted_y)
 
-        # print("Fold",i+1,": accuracy-",accuracy," precision-",precision, " recall-",recall)
-        print(i+1,"&",accuracy,"&",precision,"&",recall," \\\\")
+        print("Fold",i+1,": accuracy-",accuracy," precision-",precision, " recall-",recall)
+        # print(i+1,"&",accuracy,"&",precision,"&",recall," \\\\")
  
 if __name__ == "__main__":
     Q2_3()
