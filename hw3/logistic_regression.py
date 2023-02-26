@@ -32,8 +32,8 @@ class logistic_regression():
 
     def normalize(self, x):
         epsilon = 1e-100
-        for i in range(3000):
-            x[:,i] = (x[:,i] - x[:,i].mean(axis = 0)) / (x[:,i].std(axis = 0) + epsilon)
+        for i in range(x.shape[1]):
+            x[:,i] = (x[:,i] - x[:,i].mean()) / (x[:,i].std() + epsilon)
         return x
 
     def loss(self, f):
@@ -52,10 +52,10 @@ class logistic_regression():
         return 1.0/(1 + np.exp(-(x.astype(float)) ))
 
     def calc_gradient(self):
-        y_hat = self.sigmoid(self.x @ self.theta)
-        gradient = self.x.T @ (- self.y + y_hat)
+        f = self.sigmoid(self.x @ self.theta)
+        gradient = self.x.T @ (- self.y + f)
         gradient /= self.x.shape[0]
-        return gradient, self.loss(y_hat)
+        return gradient, self.loss(f)
 
     def train(self, times):
         for i in range(times):
